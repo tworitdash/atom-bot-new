@@ -12,7 +12,7 @@ EM.run do
 
     @clients = []
 
-    EM::WebSocket.start(:host => '0.0.0.0', :port => '3001') do |ws|
+    EM::WebSocket.start(:host => '192.168.43.210', :port => '3001') do |ws|
         ws.onopen do |handshake|
             @clients << ws
             ws.send "Connected to #{handshake.path}."

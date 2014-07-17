@@ -1,10 +1,11 @@
 require_relative 'em-websocket-client'
-require 'arduino_firmata'
+require 'serialport'
 
-arduino = ArduinoFirmata.connect
+
+
 
 EM.run do
-    conn = EventMachine::WebSocketClient.connect("ws://0.0.0.0:3001/")
+    conn = EventMachine::WebSocketClient.connect("ws://192.168.43.210:3001/")
 
     conn.callback do
         conn.send_msg "connected!"
@@ -16,11 +17,14 @@ EM.run do
 
     conn.stream do |msg|
         puts msg
-        if String(msg) == "f"
-            arduino.digital_write 13, true
-        elsif String(msg) == 'b'
-            arduino.digital_write 13, false
-        end
+        port_file = "/dev/ttyACM0"
+        baud_rate = 9600
+	   data_bits = 8
+		stop_bits = 1
+		parity = SerialPort::NONE
+		ser = SerialPort.new(port_file , baud_rate , data_bits , stop_bits , parity)
+		
+		ser.write("#{msg}")
     end
 
     conn.disconnect do

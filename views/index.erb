@@ -4,6 +4,7 @@
       body {
         font-family: "Helvetica Neue", helvetica, arial;
         padding: 15px;
+	background-color: #63aeee;
         text-align: center;
       }
 
@@ -30,6 +31,9 @@
         margin-right: 10%;
         background-color: #e3e3e3;
       }
+	#stop {
+		
+	}
 
     </style>
   </head>
@@ -39,9 +43,10 @@
     <button id="left" class="vertical">LEFT</button>
     <button id="right" class="vertical">RIGHT</button>
     <button id="back" class="horizontal">BACK</button>
+	<button id="stop" class="horizontal">STOP</button>
 
     <script>
-      var host = 'ws://10.0.0.3:3001'
+      var host = 'ws://192.168.43.210:3001/'
       var ws = new WebSocket(host);
 
       ws.onmessage = function (event) {
@@ -99,6 +104,10 @@
       var back = document.getElementById("back");
       back.onclick = function() {
         ws.send('b');
+      };
+	var back = document.getElementById("stop");
+      back.onclick = function() {
+        ws.send('s');
       };
     </script>
   </body>
